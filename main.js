@@ -3,7 +3,7 @@ $( document ).ready(function() {
 
     /* FUNZIONI ============================================*/
 
-    // 1. Click sul cerca (per azione 1 e 2)---------------
+    // 1. Cerca e inserisci risultati nel main (per azione 1 e 2)---------------
     function displaySearchedMovie(){
       var textInserito = $('#search-input').val();
 
@@ -38,31 +38,49 @@ $( document ).ready(function() {
               $('.main-container').append(html);
               /* ---- /handlebars ---- */
 
+              //azzera input ricerca
+              $('#search-input').val('');
+
           });
         }, // fine success
 
         error: function(richiesta,stato,error){
-          $('.main-container').append('Ops! si è verificato un errore')
+          console.log(richiesta);
+          //---Errore 1. Clck o invio con input vuoto
+          if (richiesta.status === 422) {
+            $('.main-container').append('Non è stato inserito nessun parametro nella ricerca');
+          }
+
+
         }, //fine error
 
       }); // fine ajax
 
-    } //fine click
+    } //fine displaySearchedMovie
 
+    // 2. Resetta main prima di ogni inserimento ricerca (per azione 1 e 2)-----------
+    function clearHTMLfromResults(){
+      $('.main-container').html('')
+    } //clearHTMLfromResults
 
     /* AZIONI ============================================*/
 
     // 1. Click sul cerca ---------------
     $('#search-button').click(
-      displaySearchedMovie
+      function(){
+        clearHTMLfromResults();
+        displaySearchedMovie();
+      }
+
     );
 
     // 2. Invio sul cerca ---------------
     $("#search-input").keypress(
-      function() {
-        if (event.keyCode === 13) { //il 13 corrisponde al tasto Enter
-          displaySearchedMovie();
-        }
+        function() {
+          if (event.keyCode === 13) { //il 13 corrisponde al tasto Enter
+            clearHTMLfromResults();
+            displaySearchedMovie();
+          }
     });
 
 
