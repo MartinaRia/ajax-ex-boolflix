@@ -42,17 +42,17 @@ header {
     padding: 10px;
     background: transparent;
     border: 1px solid #c33d33;
+    /* box-shadow: 3px 3px 0px 0px #c33d33; /* DEBUG:  */
     border-radius: 2px;
-    margin-right: 5px;
+    margin-right: 10px;
     font-family: 'Lato';
 }
 #search-input:focus {
     outline: none;
     background: #c33d33;
-    border: 1px solid #c33d33;
 }
 #search-input::placeholder {
-  color: white;
+  color: #ffffff9e;
 }
 
 #search-button{
@@ -90,7 +90,7 @@ main{
     margin: 0px auto;
     padding: 20px 0;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: flex-start;
 }
 

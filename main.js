@@ -16,36 +16,42 @@ $( document ).ready(function() {
           'query' : textInserito
         },
         success: function(data,stato){
-          $.each(data.results,
-            function(i, movieFound){
-              // variabili
-              var title = movieFound.title;
-              var originalTitle = movieFound.original_title;
-              var language = movieFound.original_language;
-              var score = movieFound.vote_average;
+          //istruzione condizionale per stabilire se la ricerca ha dato risultati
+          if (data.results.length === 0) { //le sa ricerca non ha dato risultati perchè la lunghezza dell'ogetto 'results' è pari a 0
+              $('.main-container').append("Siamo spiacenti ma la ricerca non ha fornito risultati. <br> Controlla eventuali errori di battitura o prova con un'altra parola");
+          } else {
+            $.each(data.results, //in ogni proprietà dell'oggetto 'results', dell'oggetto 'data' [alternativa a ciclo for]
+              function(i, movieFound){ //ì= itteratore, movieFound = data.results
+                // variabili
+                var title = movieFound.title; //chiave title dell'oggetto movieFound
+                var originalTitle = movieFound.original_title;
+                var language = movieFound.original_language;
+                var score = movieFound.vote_average;
 
-              /* ---- handlebars ---- */
-              var source = $("#template-movie-handlebars").html();
-              var template = Handlebars.compile(source);
+                /* ---- handlebars ---- */
+                var source = $("#template-movie-handlebars").html();
+                var template = Handlebars.compile(source);
 
-              var context = {
-                'titolo': title,
-                'titolo_originale': originalTitle,
-                'lingua': language,
-                'voto' : score
-              };
-              var html = template(context);
-              $('.main-container').append(html);
-              /* ---- /handlebars ---- */
+                var context = {
+                  'titolo': title,
+                  'titolo_originale': originalTitle,
+                  'lingua': language,
+                  'voto' : score
+                };
+                var html = template(context);
+                $('.main-container').append(html);
+                /* ---- /handlebars ---- */
 
-              //azzera input ricerca
-              $('#search-input').val('');
+                //azzera input ricerca
+                $('#search-input').val('');
+            }); //fine each
 
-          });
+          } //fine else
+
         }, // fine success
 
         error: function(richiesta,stato,error){
-          console.log(richiesta);
+          console.log('Risultato in caso di errore richiesta: ' + richiesta);
           //---Errore 1. Clck o invio con input vuoto
           if (richiesta.status === 422) {
             $('.main-container').append('Non è stato inserito nessun parametro nella ricerca');
@@ -62,6 +68,8 @@ $( document ).ready(function() {
     function clearHTMLfromResults(){
       $('.main-container').html('')
     } //clearHTMLfromResults
+
+
 
     /* AZIONI ============================================*/
 
@@ -85,4 +93,4 @@ $( document ).ready(function() {
 
 
 
-});
+}); //fine doc ready
