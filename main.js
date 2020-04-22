@@ -39,8 +39,6 @@ $( document ).ready(function() {
                   var empyStar = '<i class="far fa-star"></i>';
                   stars.push(empyStar);
                 }
-                console.log(stars);
-
 
                 /* ---- handlebars ---- */
                 var source = $("#template-movie-handlebars").html();
@@ -110,6 +108,16 @@ $( document ).ready(function() {
                 var score = movieFound.vote_average;
                 // arrotondamento voto
                 var score1to5 = Math.round(score / 2);
+                //assegnazione stelline
+                var stars = []
+                for (var i = 0; i < score1to5 ; i++) {
+                  var fullStar = '<i class="fas fa-star "></i>';
+                  stars.push(fullStar);
+                }
+                for (var i = 0; i < 5-score1to5 ; i++) {
+                  var empyStar = '<i class="far fa-star"></i>';
+                  stars.push(empyStar);
+                }
 
                 /* ---- handlebars ---- */
                 var source = $("#template-movie-handlebars").html();
@@ -119,7 +127,7 @@ $( document ).ready(function() {
                   'titolo': title,
                   'titolo_originale': originalTitle,
                   'lingua': language,
-                  'voto' : score1to5,
+                  'voto' : stars[0]+stars[1]+stars[2]+stars[3]+stars[4],
                   'tipo': 'Serie TV'
                 };
                 var html = template(context);
@@ -183,7 +191,8 @@ $( document ).ready(function() {
       stars.push(fullStar);
     }
 
-    $('.prova').append(stars)
+    // $('.prova').append(stars)
+    // console.log($('.prova').html());
 
 
     // $('.tablecontainer').html(stars);
