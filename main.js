@@ -3,7 +3,7 @@ $( document ).ready(function() {
 
     /* FUNZIONI ============================================*/
 
-    // 1. Cerca e inserisci risultati nel main (per azione 1 e 2)---------------
+    // 1. Cerca e inserisci risultati film nel main (per azione 1 e 2)---------------
     function displaySearchedMovie(){
       var textInserito = $('#search-input').val();
 
@@ -18,7 +18,7 @@ $( document ).ready(function() {
         success: function(data,stato){
           //istruzione condizionale per stabilire se la ricerca ha dato risultati
           if (data.results.length === 0) { //le sa ricerca non ha dato risultati perchè la lunghezza dell'ogetto 'results' è pari a 0
-              $('.main-container').append("Siamo spiacenti ma la ricerca non ha fornito risultati. <br> Controlla eventuali errori di battitura o prova con un'altra parola");
+              $('.main-container').append("Siamo spiacenti ma la ricerca non ha fornito risultati nella categoria Film. <br> Controlla eventuali errori di battitura o prova con un'altra parola<br>");
           } else {
             $.each(data.results, //in ogni proprietà dell'oggetto 'results', dell'oggetto 'data' [alternativa a ciclo for]
               function(i, movieFound){ //ì= itteratore, movieFound = data.results
@@ -36,7 +36,8 @@ $( document ).ready(function() {
                   'titolo': title,
                   'titolo_originale': originalTitle,
                   'lingua': language,
-                  'voto' : score
+                  'voto' : score,
+                  'tipo': 'Film'
                 };
                 var html = template(context);
                 $('.main-container').append(html);
@@ -69,6 +70,62 @@ $( document ).ready(function() {
       $('.main-container').html('')
     } //clearHTMLfromResults
 
+    // 3. Cerca e inserisci risultati serie tv nel main (per azione 1 e 2)---------------
+    function displaySearchedTvSeries(){
+      var textInserito = $('#search-input').val();
+
+      $.ajax({
+        url: 'https://api.themoviedb.org/3/search/tv?',
+        method: 'GET',
+        data:{
+          'api_key': '2bc1f8fafceba215b365b7a528d7e216',
+          'language' : 'it-IT',
+          'query' : textInserito
+        },
+        success: function(data,stato){
+          //istruzione condizionale per stabilire se la ricerca ha dato risultati
+          if (data.results.length === 0) { //le sa ricerca non ha dato risultati perchè la lunghezza dell'ogetto 'results' è pari a 0
+              $('.main-container').append("Siamo spiacenti ma la ricerca non ha fornito risultati nella categoria Serie TV. <br> Controlla eventuali errori di battitura o prova con un'altra parola<br>");
+          } else {
+            $.each(data.results, //in ogni proprietà dell'oggetto 'results', dell'oggetto 'data' [alternativa a ciclo for]
+              function(i, movieFound){ //ì= itteratore, movieFound = data.results
+                // variabili
+                var title = movieFound.name; //chiave title dell'oggetto movieFound
+                var originalTitle = movieFound.original_name;
+                var language = movieFound.original_language;
+                var score = movieFound.vote_average;
+
+                /* ---- handlebars ---- */
+                var source = $("#template-movie-handlebars").html();
+                var template = Handlebars.compile(source);
+
+                var context = {
+                  'titolo': title,
+                  'titolo_originale': originalTitle,
+                  'lingua': language,
+                  'voto' : score,
+                  'tipo': 'Serie TV'
+                };
+                var html = template(context);
+                $('.main-container').append(html);
+                /* ---- /handlebars ---- */
+
+                //azzera input ricerca
+                $('#search-input').val('');
+            }); //fine each
+
+          } //fine else
+
+        }, // fine success
+
+        error: function(richiesta,stato,error){
+          console.log('Risultato in caso di errore richiesta: ' + richiesta);
+        }, //fine error
+
+      }); // fine ajax
+
+    } //fine displaySearchedTvSeries
+
 
 
     /* AZIONI ============================================*/
@@ -78,6 +135,7 @@ $( document ).ready(function() {
       function(){
         clearHTMLfromResults();
         displaySearchedMovie();
+        displaySearchedTvSeries();
       }
 
     );
@@ -88,6 +146,7 @@ $( document ).ready(function() {
           if (event.keyCode === 13) { //il 13 corrisponde al tasto Enter
             clearHTMLfromResults();
             displaySearchedMovie();
+            displaySearchedTvSeries();
           }
     });
 
