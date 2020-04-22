@@ -3,7 +3,7 @@ $( document ).ready(function() {
 
     /* FUNZIONI ============================================*/
 
-    // 1. Cerca e inserisci risultati film nel main (per azione 1 e 2)---------------
+    // 1. Cerca e inserisci risultati film nel main (PER AZIONE 1 e 2)---------------
     function displaySearchedMovie(){
       var textInserito = $('#search-input').val();
 
@@ -27,6 +27,8 @@ $( document ).ready(function() {
                 var originalTitle = movieFound.original_title;
                 var language = movieFound.original_language;
                 var score = movieFound.vote_average;
+                // arrotondamento voto
+                var score1to5 = Math.round(score / 2);
 
                 /* ---- handlebars ---- */
                 var source = $("#template-movie-handlebars").html();
@@ -36,7 +38,7 @@ $( document ).ready(function() {
                   'titolo': title,
                   'titolo_originale': originalTitle,
                   'lingua': language,
-                  'voto' : score,
+                  'voto' : score1to5,
                   'tipo': 'Film'
                 };
                 var html = template(context);
@@ -65,12 +67,12 @@ $( document ).ready(function() {
 
     } //fine displaySearchedMovie
 
-    // 2. Resetta main prima di ogni inserimento ricerca (per azione 1 e 2)-----------
+    // 2. Resetta main prima di ogni inserimento ricerca (PER AZIONE 1 e 2)-----------
     function clearHTMLfromResults(){
       $('.main-container').html('')
     } //clearHTMLfromResults
 
-    // 3. Cerca e inserisci risultati serie tv nel main (per azione 1 e 2)---------------
+    // 3. Cerca e inserisci risultati serie tv nel main (PER AZIONE 1 e 2)---------------
     function displaySearchedTvSeries(){
       var textInserito = $('#search-input').val();
 
@@ -94,6 +96,8 @@ $( document ).ready(function() {
                 var originalTitle = movieFound.original_name;
                 var language = movieFound.original_language;
                 var score = movieFound.vote_average;
+                // arrotondamento voto
+                var score1to5 = Math.round(score / 2);
 
                 /* ---- handlebars ---- */
                 var source = $("#template-movie-handlebars").html();
@@ -103,7 +107,7 @@ $( document ).ready(function() {
                   'titolo': title,
                   'titolo_originale': originalTitle,
                   'lingua': language,
-                  'voto' : score,
+                  'voto' : score1to5,
                   'tipo': 'Serie TV'
                 };
                 var html = template(context);
@@ -125,6 +129,11 @@ $( document ).ready(function() {
       }); // fine ajax
 
     } //fine displaySearchedTvSeries
+
+    // 4. Trasformazione voto in stelline (PER FUNZIONI 1 e 3)---------------
+    // function rounding(){
+    //
+    // }
 
 
 
