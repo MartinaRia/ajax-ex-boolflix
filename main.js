@@ -123,7 +123,6 @@ $( document ).ready(function() {
         clearHTMLfromResults();
         displaySearchedMovieAndTvSeries();
       }
-
     );
 
     // 2. Invio sul cerca ---------------
