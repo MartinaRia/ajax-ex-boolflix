@@ -22,8 +22,8 @@ $( document ).ready(function() {
           } else {
             $.each(data.results, //in ogni proprietà dell'oggetto 'results', dell'oggetto 'data' [alternativa a ciclo for]
               function(i, movieFound){ //ì= itteratore, movieFound = data.results
-                // variabili
 
+                // variabili
                 /* ----- differenzia var movie da var tv ------*/
                 if (movieFound.media_type == 'movie') {
                   var title = movieFound.title; //chiave title dell'oggetto movieFound
@@ -33,14 +33,15 @@ $( document ).ready(function() {
                   var title = movieFound.name;
                   var originalTitle = movieFound.original_name;
                   var type = 'Serie TV';
-                };
+                }
                 var language = movieFound.original_language;
                 var score = movieFound.vote_average;
+                var copertina = 'https://image.tmdb.org/t/p/w185'+ movieFound.poster_path;
 
                 /* ---- assegnazione stelline ---- */
                 var score1to5 = Math.round(score / 2); // arrotondamento voto
 
-                var stars = [] //array stelline
+                var stars = []; //array stelline
                 // assegna tante stelline piene per quanto è il voto score1to5...
                 for (var i = 0; i < score1to5 ; i++) {
                   var fullStar = '<i class="fas fa-star "></i>';
@@ -59,21 +60,22 @@ $( document ).ready(function() {
                   'es': 'img/spain.png',
                   'pt': 'img/portugal.png',
                   'fr': 'img/france.png'
-                }
+                };
                 for (var key in flags) { //scorri nell'oggetto...
                   if ([key] == language) { // ...se trovi una chiave dell'ogetto uguale alla lingua...
                    var langInFlag = flags[key]; //...allora prendi il valore della chiave e inseriscila nella chiave 'lingua' di handlebars...
                  }
-               };
+               }
                 if (langInFlag == undefined) { // ...se non hai trovato una chiave uguale alla lingua ...
-                  langInFlag = 'img/unknown-flag.png' // ...allora assegna una bandiere 'lingua non specificata'
-                };
+                  langInFlag = 'img/unknown-flag.png'; // ...allora assegna una bandiere 'lingua non specificata'
+                }
 
                 /* ---- handlebars ---- */
                 var source = $("#template-movie-handlebars").html();
                 var template = Handlebars.compile(source);
 
                 var context = {
+                  'copertina': copertina,
                   'titolo': title,
                   'titolo_originale': originalTitle,
                   'lingua': langInFlag,
@@ -88,7 +90,7 @@ $( document ).ready(function() {
                 $('#search-input').val('');
             }); //fine each
 
-          }; //fine else
+          } //fine else
 
         }, // fine success
 
@@ -108,10 +110,8 @@ $( document ).ready(function() {
 
     // 2. Resetta main prima di ogni inserimento ricerca (PER AZIONE 1 e 2)-----------
     function clearHTMLfromResults(){
-      $('.main-container').html('')
+      $('.main-container').html('');
     } //clearHTMLfromResults
-
-
 
 
 
@@ -135,8 +135,57 @@ $( document ).ready(function() {
           }
     });
 
+    // 3. Hover su copertina ---------------
+    $('.main-container').on('mouseenter', '.search-result-container',
+      function(){
+        $('.copertina', this).fadeOut();
+      });
+    $('.main-container').on('mouseleave', '.search-result-container',
+      function(){
+        $('.copertina', this).fadeIn();
+      });
+
 
 
 
 
 }); //fine doc ready
+
+/*
+Size options
+"backdrop_sizes": [
+  "w300",
+  "w780",
+  "w1280",
+  "original"
+],
+"logo_sizes": [
+  "w45",
+  "w92",
+  "w154",
+  "w185",
+  "w300",
+  "w500",
+  "original"
+],
+"poster_sizes": [
+  "w92",
+  "w154",
+  "w185",
+  "w342",
+  "w500",
+  "w780",
+  "original"
+],
+"profile_sizes": [
+  "w45",
+  "w185",
+  "h632",
+  "original"
+],
+"still_sizes": [
+  "w92",
+  "w185",
+  "w300",
+  "original"
+]*/

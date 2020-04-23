@@ -37,27 +37,30 @@
           <!-- handlebars template -->
           <script id="template-movie-handlebars" type="text/x-handlebars-template">
               <div class="search-result-container">
-                <h2 class="titolo">
-                  <span class="lable">TITOLO</span><br>
-                  {{titolo}}
-                </h2>
-                <h3 class="titolo-originale">
-                  <span class="lable">TITOLO ORIGINALE</span><br>
-                  {{titolo_originale}}
-                </h3>
-                <p class="lingua flex-container">
-                  <span class="lable">LINGUA </span>
-                  <img src="{{{lingua}}}" alt="">
-                </p>
-                <p class="voto">
-                  <span class="lable">VOTO </span>
-                  {{{voto}}}
-                </p>
-                <p class="tipologia">
-                  <span class="lable">TIPOLOGIA: </span>
-                  {{tipo}}
-                </p>
-              </div>
+                <img class="copertina" src="{{{copertina}}}" alt="">
+                <div class="info">
+                  <h2 class="titolo">
+                    <span class="lable">TITOLO</span><br>
+                    {{titolo}}
+                  </h2>
+                  <h3 class="titolo-originale">
+                    <span class="lable">TITOLO ORIGINALE</span><br>
+                    {{titolo_originale}}
+                  </h3>
+                  <p class="lingua flex-container">
+                    <span class="lable">LINGUA </span>
+                    <img src="{{{lingua}}}" alt="">
+                  </p>
+                  <p class="voto">
+                    <span class="lable">VOTO </span>
+                    {{{voto}}}
+                  </p>
+                  <p class="tipologia">
+                    <span class="lable">TIPOLOGIA: </span>
+                    {{tipo}}
+                  </p>
+                </div> <!--/info -->
+              </div> <!-- /search-result-container -->
           </script>
           <!--/  template handlebars -->
 

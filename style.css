@@ -95,24 +95,28 @@ main{
 }
 
 .search-result-container{
-    flex-basis: 200px;
+    flex-basis: 185px;
+    min-height: 276px;
     padding: 20px;
     margin: 10px 20px;
-    min-height: 240px;
+    position: relative;
+    background: black;
+    border-radius: 2px;
+    cursor: pointer;
 }
 
 .lable{
     color: grey;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .titolo{
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 400;
     margin-bottom: 10px;
 }
 .titolo-originale{
-    font-size: 17px;
+    font-size: 16px;
     font-weight: normal;
     margin-bottom: 10px;
 }
@@ -121,10 +125,20 @@ main{
     margin-bottom: 10px;
 }
 
+.copertina{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.info{
+    padding: 5px;
+}
+
 .lingua{
-  align-items: center;
+    align-items: center;
 }
 
 .lingua img{
-  margin-left: 5px;
+    margin-left: 5px;
 }
