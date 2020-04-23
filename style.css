@@ -120,3 +120,11 @@ main{
 .search-result-container p{
     margin-bottom: 10px;
 }
+
+.lingua{
+  align-items: center;
+}
+
+.lingua img{
+  margin-left: 5px;
+}

@@ -27,18 +27,38 @@ $( document ).ready(function() {
                 var originalTitle = movieFound.original_title;
                 var language = movieFound.original_language;
                 var score = movieFound.vote_average;
-                // arrotondamento voto
-                var score1to5 = Math.round(score / 2);
-                //assegnazione stelline
-                var stars = []
+
+                /* ---- assegnazione stelline ---- */
+                var score1to5 = Math.round(score / 2); // arrotondamento voto
+
+                var stars = [] //array stelline
+                // assegna tante stelline piene per quanto è il voto score1to5...
                 for (var i = 0; i < score1to5 ; i++) {
                   var fullStar = '<i class="fas fa-star "></i>';
                   stars.push(fullStar);
                 }
+                // ...la differenze tra 5 e score1to5 riempila di stelline vuote
                 for (var i = 0; i < 5-score1to5 ; i++) {
                   var empyStar = '<i class="far fa-star"></i>';
                   stars.push(empyStar);
                 }
+
+                /* ---- assegnazione bandiere a lingua ---- */
+                var flags = {
+                  'it': 'img/it.png',
+                  'en': 'img/uk.png',
+                  'es': 'img/spain.png',
+                  'pt': 'img/portugal.png',
+                  'fr': 'img/france.png'
+                }
+                for (var key in flags) { //scorri nell'oggetto...
+                  if ([key] == language) { // ...se trovi una chiave dell'ogetto uguale alla lingua...
+                   var langInFlag = flags[key]; //...allora prendi il valore della chiave e inseriscila nella chiave 'lingua' di handlebars...
+                 }
+               };
+                if (langInFlag == undefined) { // ...se non hai trovato una chiave uguale alla lingua ...
+                  langInFlag = 'img/unknown-flag.png' // ...allora assegna una bandiere 'lingua non specificata'
+                };
 
                 /* ---- handlebars ---- */
                 var source = $("#template-movie-handlebars").html();
@@ -47,7 +67,7 @@ $( document ).ready(function() {
                 var context = {
                   'titolo': title,
                   'titolo_originale': originalTitle,
-                  'lingua': language,
+                  'lingua': langInFlag,
                   'voto' : stars[0]+stars[1]+stars[2]+stars[3]+stars[4],
                   'tipo': 'Film'
                 };
@@ -106,17 +126,37 @@ $( document ).ready(function() {
                 var originalTitle = movieFound.original_name;
                 var language = movieFound.original_language;
                 var score = movieFound.vote_average;
-                // arrotondamento voto
-                var score1to5 = Math.round(score / 2);
-                //assegnazione stelline
-                var stars = []
+
+                /* ---- assegnazione stelline ---- */
+                var score1to5 = Math.round(score / 2); // arrotondamento voto
+
+                var stars = [] //array stelline
+                // assegna tante stelline piene per quanto è il voto score1to5...
                 for (var i = 0; i < score1to5 ; i++) {
                   var fullStar = '<i class="fas fa-star "></i>';
                   stars.push(fullStar);
                 }
+                // ...la differenze tra 5 e score1to5 riempila di stelline vuote
                 for (var i = 0; i < 5-score1to5 ; i++) {
                   var empyStar = '<i class="far fa-star"></i>';
                   stars.push(empyStar);
+                }
+
+                /* ---- assegnazione bandiere a lingua ---- */
+                var flags = {
+                  'it': 'img/it.png',
+                  'en': 'img/uk.png',
+                  'es': 'img/spain.png',
+                  'pt': 'img/portugal.png',
+                  'fr': 'img/france.png'
+                }
+                for (var key in flags) { //scorri nell'oggetto...
+                  if ([key] == language) { // ...se trovi una chiave dell'ogetto uguale alla lingua...
+                   var langInFlag = flags[key]; //...allora prendi il valore della chiave e inseriscila nella chiave 'lingua' di handlebars...
+                 }
+               };
+                if (langInFlag == undefined) { // ...se non hai trovato una chiave uguale alla lingua ...
+                  langInFlag = 'img/unknown-flag.png' // ...allora assegna una bandiere 'lingua non specificata'
                 }
 
                 /* ---- handlebars ---- */
@@ -126,7 +166,7 @@ $( document ).ready(function() {
                 var context = {
                   'titolo': title,
                   'titolo_originale': originalTitle,
-                  'lingua': language,
+                  'lingua': langInFlag,
                   'voto' : stars[0]+stars[1]+stars[2]+stars[3]+stars[4],
                   'tipo': 'Serie TV'
                 };
